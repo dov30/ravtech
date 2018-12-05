@@ -1,0 +1,54 @@
+<!-- <h3>מלא את הפרטים ואח"כ לחץ על שמור</h3> -->
+<div class="row">
+  <div class="col-xs-12">
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-xs-12">
+          <button type="submit"
+          class="btn btn-success"
+          [disabled]="!projectForm.valid">שמירה</button>
+          <button type="button" class="btn btn-danger" (click)="onCancel()">ביטול</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <h3>Project Edit Detail</h3>
+          <hr>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3">
+          <div class="form-group">
+            <label for="id">Id</label>
+            <input type="text" id="id"
+            formControlName="id" class="form-control"
+            >
+          </div>
+        </div>
+        <div class="col-xs-3">
+          <div class="form-group">
+            <label for="customerName">Customer Name</label>
+            <input type="text" id="customerName" formControlName="customerName" class="form-control">
+          </div>
+        </div>
+        <div class="col-xs-3">
+          <div class="form-group">
+            <label for="projectName">Project Name</label>
+            <input type="text" id="projectName" formControlName="projectName" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3">
+          <div class="form-group">
+            <label for="projectType">Project Type</label>
+            <br>
+            <select id="projectType" formControlName="projectType" class="form-control">
+              <option *ngFor="let pt of projectTypes" [ngValue]="pt">{{pt}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

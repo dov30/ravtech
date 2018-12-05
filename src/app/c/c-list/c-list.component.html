@@ -1,0 +1,10 @@
+
+<div class="row">
+  <div class="col-xs-12">
+    <app-c-item
+      *ngFor="let customerEl of (customerState | async).customers; let i = index"
+      [customer]="customerEl"
+      [index]="i"></app-c-item>
+  </div>
+</div>
+

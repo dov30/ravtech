@@ -1,0 +1,20 @@
+<div class="list-group-item clearfix">
+    <div class="pull-left">
+      <h4 class="list-group-item-heading">{{ customer.name }}</h4>
+    </div>
+    <br>
+    <div class="pull-center">
+      <h4 class="list-group-item-heading">{{ customer.billable }}</h4>
+    </div>
+
+    <div class="pull-right">
+      <button type="button" class="btn btn-info">
+        <a style="cursor: pointer;"
+        (click)="onEditCustomer()" routerLinkActive="active">Edit</a>
+      </button>
+    <button type="button" class="btn btn-danger">
+        <a style="cursor: pointer;"
+        (click)="onDeleteCustomer()" routerLinkActive="active">Delete</a>
+      </button>
+    </div>
+  </div>
