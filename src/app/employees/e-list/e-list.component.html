@@ -1,0 +1,21 @@
+<div class="row center">
+    <div class="col-xs-12">
+        <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-default"><h4>Insert An Employee Name</h4></span>
+        </div>
+<input type="text" class="form-control"
+ aria-label="Default"
+ aria-describedby="inputGroup-sizing-default"
+  (input)="onSearch($event.target.value)"/>
+</div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-xs-12">
+    <app-e-item
+      *ngFor="let employeeEl of employeeList; let i = index"
+      [employee]="employeeEl"
+      [index]="i"></app-e-item>
+  </div>
+</div>
+

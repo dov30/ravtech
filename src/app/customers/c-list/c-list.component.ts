@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import * as fromCustomer from '../store/c.reducers';
+import { Customer } from '../../shared/customer.model';
 
 @Component({
   selector: 'app-c-list',
@@ -13,7 +14,8 @@ import * as fromCustomer from '../store/c.reducers';
 
 export class CListComponent implements OnInit {
   customerState: Observable<fromCustomer.State>;
-  // listLength;
+  allCustomers: Customer[];
+  customerList: Customer[];
 
 
   constructor(private router: Router,
@@ -23,8 +25,19 @@ export class CListComponent implements OnInit {
 
     ngOnInit() {
       this.customerState = this.store.select('customers');
-      // const listLength = this.store;
-      // console.log('its my', listLength);
+      this.customerState.subscribe(res => {
+        this.allCustomers = res.customers;
+        this.customerList = res.customers;
+      });
+  }
 
+  onSearch(value) {
+    this.customerList = this.filter(value);
+  }
+
+  filter(value: string): Customer[] {
+    return this.allCustomers.filter(cus => {
+      return cus.name.toLocaleLowerCase().startsWith(value.toLowerCase());
+    });
   }
 }

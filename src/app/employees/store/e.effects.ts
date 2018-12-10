@@ -14,7 +14,7 @@ export class EEffects {
   employeeFetch = this.actions$
     .ofType(EmployeeActions.FETCH_EMPLOYEES)
     .pipe(switchMap((action: EmployeeActions.FetchEmployees) => {
-      return this.httpClient.get<Employee[]>('https://assignment-managment.firebaseio.com/employees.json', {
+      return this.httpClient.get<Employee[]>('employees.json', {
         observe: 'body',
         responseType: 'json'
       });
@@ -33,7 +33,7 @@ export class EEffects {
     .ofType(EmployeeActions.STORE_EMPLOYEES)
     .pipe(withLatestFrom(this.store.select('employees')),
       switchMap(([action, state]) => {
-        const req = new HttpRequest('PUT', 'https://assignment-managment.firebaseio.com/employees.json',
+        const req = new HttpRequest('PUT', 'employees.json',
          state.employees, {reportProgress: true});
         return this.httpClient.request(req);
       }));

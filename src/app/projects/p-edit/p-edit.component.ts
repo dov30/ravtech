@@ -6,7 +6,11 @@ import { take } from 'rxjs/operators';
 
 import * as ProjectActions from '../store/p.actions';
 import * as fromProject from '../store/p.reducers';
-// import { Guarantor } from '../../shared/guarantor.model';
+import { Observable } from 'rxjs';
+import { Project } from '../../shared/project.model';
+
+import * as fromCustomer from '../../customers/store/c.reducers';
+import { Customer } from '../../shared/customer.model';
 
 @Component({
   selector: 'app-p-edit',
@@ -14,19 +18,39 @@ import * as fromProject from '../store/p.reducers';
   styleUrls: ['./p-edit.component.css']
 })
 export class PEditComponent implements OnInit {
+  projectState: Observable<fromProject.State>;
+  allProjects: Project[];
+  listLength: number;
 
   id: number;
   editMode = false;
   projectForm: FormGroup;
   projectTypes = ['Milestone', 'T&M', 'other'];
 
+  customerState: Observable<fromCustomer.State>;
+  allCustomers: Customer[];
+  customerList: Customer[];
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private store: Store<fromProject.FeatureState>) {
+    private store: Store<fromProject.FeatureState>,
+    private customerStore: Store<fromCustomer.FeatureState>) {
   }
 
   ngOnInit() {
+    this.customerState = this.customerStore.select('customers');
+    this.customerState.subscribe(res => {
+      this.allCustomers = res.customers;
+      this.customerList = res.customers;
+    });
+    // Accepts the projects list length to give an ID for a new project.
+    this.projectState = this.store.select('projects');
+    this.projectState.subscribe(res => {
+      this.allProjects = res.projects;
+      this.listLength = this.allProjects.length + 1;
+    });
+    console.log(this.listLength);
+
     this.route.params
       .subscribe(
         (params: Params) => {
@@ -38,7 +62,6 @@ export class PEditComponent implements OnInit {
   }
 
   onSubmit() {
-
     if (this.editMode) {
       this.store.dispatch(new ProjectActions.UpdateProject({
         index: this.id,
@@ -57,7 +80,10 @@ export class PEditComponent implements OnInit {
   }
 
   private initForm() {
-    let pId;
+    let pId = this.id;
+    if (!this.editMode) {
+      pId = this.listLength;
+    }
     let pCustomerName = '';
     let pProjectName = '';
     let pProjectType = '';
@@ -69,7 +95,7 @@ export class PEditComponent implements OnInit {
         .pipe(take(1))
         .subscribe((projectState: fromProject.State) => {
           const project = projectState.projects[this.id];
-          pId = project.id;
+          pId = this.id + 1;
           pCustomerName = project.customerName;
           pProjectName = project.projectName;
           pProjectType = project.projectType;
@@ -83,5 +109,22 @@ export class PEditComponent implements OnInit {
       'projectType': new FormControl(pProjectType, Validators.required),
 
     });
+  }
+
+  onSearchCustomers(value) {
+    this.customerList = this.filter(value);
+    console.log(this.customerList);
+
+  }
+
+  filter(value: string): Customer[] {
+    return this.allCustomers.filter(emp => {
+      return emp.name.toLocaleLowerCase().startsWith(value.toLowerCase());
+    });
+  }
+
+  customerValue(value) {
+  console.log(value);
+
   }
 }

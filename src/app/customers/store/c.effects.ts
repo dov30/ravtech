@@ -14,7 +14,7 @@ export class CEffects {
   customerFetch = this.actions$
     .ofType(CustomerActions.FETCH_CUSTOMERS)
     .pipe(switchMap((action: CustomerActions.FetchCustomers) => {
-      return this.httpClient.get<Customer[]>('https://assignment-managment.firebaseio.com/customers.json', {
+      return this.httpClient.get<Customer[]>('customers.json', {
         observe: 'body',
         responseType: 'json'
       });
@@ -35,7 +35,7 @@ export class CEffects {
     .ofType(CustomerActions.STORE_CUSTOMERS)
     .pipe(withLatestFrom(this.store.select('customers')),
       switchMap(([action, state]) => {
-        const req = new HttpRequest('PUT', 'https://assignment-managment.firebaseio.com/customers.json',
+        const req = new HttpRequest('PUT', 'customers.json',
          state.customers, {reportProgress: true});
 
         return this.httpClient.request(req);

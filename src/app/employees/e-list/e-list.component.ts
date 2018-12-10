@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Employee } from '../../shared/employee.model';
 // import { ReactiveFormsModule } from '@angular/forms';
-
+import * as EmployeeActions from '../store/e.actions';
 import * as fromEmployee from '../store/e.reducers';
 
 @Component({

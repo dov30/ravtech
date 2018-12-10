@@ -25,13 +25,13 @@
           *ngIf="(authState | async).authenticated">Loguot</a></li>
 
         <li class="dropdown" appDropdown *ngIf="(authState | async).authenticated">
-          <a style="cursor: pointer;" class="dropdown-toggle" role="button">Managment <span class="caret"></span></a>
+          <a style="cursor: pointer;" class="dropdown-toggle" role="button" (click)="onFetchData()">Managment <span class="caret"></span></a>
           <ul class="dropdown-menu">
-              <li routerLinkActive="active"><a routerLink="/employees/list" (click)="onFetchEmployees()">All Employees</a></li>
+              <li routerLinkActive="active"><a routerLink="/employees/list">All Employees</a></li>
               <li routerLinkActive="active"><a routerLink="employees/new">New Employees</a></li>
-              <li routerLinkActive="active"><a routerLink="projects/list" (click)="onFetchProjects()">All Projects</a></li>
+              <li routerLinkActive="active"><a routerLink="projects/list">All Projects</a></li>
               <li routerLinkActive="active"><a routerLink="projects/new">New Project</a></li>
-              <li routerLinkActive="active"><a routerLink="customers/list" (click)="onFetchCustomers()">All Customers</a></li>
+              <li routerLinkActive="active"><a routerLink="customers/list">All Customers</a></li>
               <li routerLinkActive="active"><a routerLink="customers/new">New Customer</a></li>
             <!-- <li><a style="cursor: pointer;" (click)="onSaveData()">Save Dada</a></li>
             <li><a style="cursor: pointer;" (click)="onFetchData()">Feathe Data</a></li> -->

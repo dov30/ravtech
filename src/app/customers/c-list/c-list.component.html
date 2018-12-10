@@ -1,7 +1,7 @@
 <div class="row center">
     <div class="col-xs-12">
         <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroup-sizing-default"><h4>Insert A Name</h4></span>
+        <span class="input-group-text" id="inputGroup-sizing-default"><h4>Insert A Customer Name</h4></span>
         </div>
 <input type="text" class="form-control"
  aria-label="Default"
@@ -10,12 +10,13 @@
 </div>
 </div>
 <hr>
+
 <div class="row">
   <div class="col-xs-12">
-    <app-e-item
-      *ngFor="let employeeEl of employeeList; let i = index"
-      [employee]="employeeEl"
-      [index]="i"></app-e-item>
+    <app-c-item
+      *ngFor="let customerEl of customerList; let i = index"
+      [customer]="customerEl"
+      [index]="i"></app-c-item>
   </div>
 </div>
 

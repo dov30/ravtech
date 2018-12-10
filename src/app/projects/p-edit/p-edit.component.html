@@ -20,23 +20,30 @@
         <div class="col-xs-3">
           <div class="form-group">
             <label for="id">Id</label>
-            <input type="text" id="id"
-            formControlName="id" class="form-control"
-            >
+            <input type="number" id="id"
+            formControlName="id"
+            class="form-control"
+            readonly>
           </div>
         </div>
+        <div class="col-xs-3">
+            <div class="form-group">
+              <label for="projectName">Project Name</label>
+              <input type="text" id="projectName" formControlName="projectName" class="form-control">
+            </div>
+          </div>
         <div class="col-xs-3">
           <div class="form-group">
             <label for="customerName">Customer Name</label>
-            <input type="text" id="customerName" formControlName="customerName" class="form-control">
+            <input type="text"
+             id="customerName"
+              formControlName="customerName"
+               class="form-control"
+               (input)="onSearchCustomers($event.target.value)"
+               >
+               <div *ngFor="let c of customerList; let i = index" (click)="customerValue(index)">{{c.name}}</div>
           </div>
-        </div>
-        <div class="col-xs-3">
-          <div class="form-group">
-            <label for="projectName">Project Name</label>
-            <input type="text" id="projectName" formControlName="projectName" class="form-control">
           </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-xs-3">

@@ -6,7 +6,8 @@ import { take } from 'rxjs/operators';
 
 import * as CustomerActions from '../store/c.actions';
 import * as fromCustomer from '../store/c.reducers';
-import { CEffects } from '../store/c.effects';
+import { Observable } from 'rxjs';
+import { Customer } from '../../shared/customer.model';
 
 @Component({
   selector: 'app-c-edit',
@@ -14,7 +15,9 @@ import { CEffects } from '../store/c.effects';
   styleUrls: ['./c-edit.component.css']
 })
 export class CEditComponent implements OnInit {
-
+  customerState: Observable<fromCustomer.State>;
+  allCustomers: Customer[];
+  listLength: number;
   id: number;
   editMode = false;
   customerForm: FormGroup;
@@ -24,11 +27,18 @@ export class CEditComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private store: Store<fromCustomer.FeatureState>,
-    private storeLength: CEffects) {
+    private store: Store<fromCustomer.FeatureState>) {
   }
 
   ngOnInit() {
+    // Accepts the customers list length to give an ID for a new customer.
+    this.customerState = this.store.select('customers');
+    this.customerState.subscribe(res => {
+      this.allCustomers = res.customers;
+      this.listLength = this.allCustomers.length + 1;
+    });
+    console.log(this.listLength);
+
     this.route.params
       .subscribe(
         (params: Params) => {
@@ -40,7 +50,6 @@ export class CEditComponent implements OnInit {
   }
 
   onSubmit() {
-
     if (this.editMode) {
       this.store.dispatch(new CustomerActions.UpdateCustomer({
         index: this.id,
@@ -60,7 +69,10 @@ export class CEditComponent implements OnInit {
   }
 
   private initForm() {
-    let cId;
+    let cId = this.id;
+    if (!this.editMode) {
+       cId = this.listLength;
+    }
     let cName = '';
     let cBillable = false;
 
@@ -71,7 +83,7 @@ export class CEditComponent implements OnInit {
         .pipe(take(1))
         .subscribe((customerState: fromCustomer.State) => {
           const customer = customerState.customers[this.id];
-          cId = customer.id;
+          cId = this.id + 1;
           cName = customer.name;
           cBillable = customer.billable;
 

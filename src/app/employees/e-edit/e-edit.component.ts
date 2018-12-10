@@ -20,6 +20,7 @@ export class EEditComponent implements OnInit {
   employeeForm: FormGroup;
   site = ['Jerusalem', 'Bnei Brak'];
   seniorityLevel = ['Intern', 'Junior', 'Senior'];
+  lengthList: number;
 
 
   constructor(private route: ActivatedRoute,

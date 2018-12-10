@@ -6,9 +6,9 @@ import { Observable } from 'rxjs';
 import * as fromApp from '../../store/app.reducers';
 import * as fromAuth from '../../auth/store/auth.reducers';
 import * as AuthActions from '../../auth/store/auth.actions';
-import * as EmployeeActions from '../../e/store/e.actions';
-import * as ProjectActions from '../../p/store/p.actions';
-import * as CustomerActions from '../../c/store/c.actions';
+import * as EmployeeActions from '../../employees/store/e.actions';
+import * as ProjectActions from '../../projects/store/p.actions';
+import * as CustomerActions from '../../customers/store/c.actions';
 
 @Component({
   selector: 'app-header',
@@ -24,15 +24,15 @@ export class HeaderComponent implements OnInit {
     this.authState = this.store.select('auth');
   }
 
-  onFetchEmployees() {
+  onFetchData() {
     this.store.dispatch(new EmployeeActions.FetchEmployees());
-  }
-  onFetchProjects() {
     this.store.dispatch(new ProjectActions.FetchProjects());
-  }
-  onFetchCustomers() {
     this.store.dispatch(new CustomerActions.FetchCustomers());
   }
+  // onFetchProjects() {
+  // }
+  // onFetchCustomers() {
+  // }
 
   onLogout() {
     this.store.dispatch(new AuthActions.Logout());

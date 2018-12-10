@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import * as fromProject from '../store/p.reducers';
+import { Project } from '../../shared/project.model';
 
 @Component({
   selector: 'app-p-list',
@@ -13,6 +14,8 @@ import * as fromProject from '../store/p.reducers';
 
 export class PListComponent implements OnInit {
   projectState: Observable<fromProject.State>;
+  allProjects: Project[];
+  projectList: Project[];
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -21,7 +24,18 @@ export class PListComponent implements OnInit {
 
   ngOnInit() {
     this.projectState = this.store.select('projects');
-    console.log(this.projectState);
+    this.projectState.subscribe(res => {
+      this.allProjects = res.projects;
+      this.projectList = res.projects;
+    });
+  }
+  onSearch(value) {
+    this.projectList = this.filter(value);
+  }
 
+  filter(value: string): Project[] {
+    return this.allProjects.filter(pro => {
+      return pro.projectName.toLocaleLowerCase().startsWith(value.toLowerCase());
+    });
   }
 }

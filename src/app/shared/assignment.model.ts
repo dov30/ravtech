@@ -1,9 +1,9 @@
 export class Assignment {
     constructor(public id: number,
                 public projectId: number,
-                public presents: number,
+                public percentage: number,
                 public employeeId: number,
-                public startDate: Date,
-                public endDate: Date) {
+                public startWeak: string,
+                public numOfWeak: number) {
                 }
 }

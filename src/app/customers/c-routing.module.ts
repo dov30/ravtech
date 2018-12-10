@@ -8,7 +8,7 @@ import { CListComponent } from './c-list/c-list.component';
 
 const customerRoutes: Routes = [
   { path: '',  children: [
-    { path: 'list', component: CListComponent },
+    { path: 'list', component: CListComponent, canActivate: [AuthGuard]},
     { path: 'new', component: CEditComponent, canActivate: [AuthGuard] },
     { path: 'list/:id/edit', component: CEditComponent, canActivate: [AuthGuard] },
   ] },

@@ -14,7 +14,7 @@ export class PEffects {
   projectFetch = this.actions$
     .ofType(ProjectActions.FETCH_PROJECTS)
     .pipe(switchMap((action: ProjectActions.FetchProjects) => {
-      return this.httpClient.get<Project[]>('https://assignment-managment.firebaseio.com/projects.json', {
+      return this.httpClient.get<Project[]>('projects.json', {
         observe: 'body',
         responseType: 'json'
       });
@@ -33,7 +33,7 @@ export class PEffects {
     .ofType(ProjectActions.STORE_PROJECTS)
     .pipe(withLatestFrom(this.store.select('projects')),
       switchMap(([action, state]) => {
-        const req = new HttpRequest('PUT', 'https://assignment-managment.firebaseio.com/projects.json',
+        const req = new HttpRequest('PUT', 'projects.json',
          state.projects, {reportProgress: true});
         return this.httpClient.request(req);
       }));
